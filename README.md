@@ -1,2 +1,3 @@
 # Tablic Lite 
-A mulitpalyer card game built with MeteorJS.
+A mulitplayer card game built with MeteorJS.
+https://tablic-lite.herokuapp.com
