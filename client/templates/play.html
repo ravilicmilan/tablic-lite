@@ -1,0 +1,142 @@
+<template name="play">
+	{{#if currentUser}}
+		{{> status}}
+		{{#unless inProgress}}
+			{{> score}}
+		{{/unless}}
+		{{#if inProgress}}
+			<div id="table-template">
+				<div style="visibility:hidden;">{{table_changed}}</div>
+				{{> table}}
+			</div>
+			
+			{{> hand}}
+		{{/if}}
+		{{> pile}}
+	{{/if}}
+</template>
+
+<template name="status">
+	<div class="row">
+		<div class="col-xs-12 col-md-12">
+			<h2>
+				Game between you and 
+				<span class="label label-primary">
+					<i class="glyphicon glyphicon-user"></i> {{otherPlayer.username}}
+				</span> 
+				{{#if inProgress}}
+					{{#if yourTurn}} 
+						(Your Turn) 
+					{{/if}}
+				{{/if}}
+			</h2>
+		</div>
+	</div>
+</template>
+
+<template name="table">
+	<div class="row">
+		<div id="table" class="col-xs-12 col-md-12">
+			<h2>Table</h2>
+			{{#each table}}
+				{{> tableCard}}
+			{{/each}}
+		</div>
+	</div>
+</template>
+
+<template name="tableCard">
+	<div id="{{generateId}}" data-suit="{{suit}}" data-name="{{name}}" data-card-value="{{cardValue}}" data-game-value="{{gameValue}}" class="card-table">
+		<img data-id="{{id}}" data-suit="{{suit}}" data-name="{{name}}" data-card-value="{{cardValue}}" data-game-value="{{gameValue}}" src="/cards/{{id}}.png" alt="{{id}}">
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  	<div class="modal-dialog" role="document">
+	  	  	<div class="modal-content">
+	  	  	  	<div class="modal-header">
+	  	  	  	  	<h4 class="modal-title" id="myModalLabel">Choose Value For Ace</h4>
+	  	  	  	</div>
+	  	  	  	<div class="modal-body">
+	  	  	  		<span style="display: none;" id="ace-dialog"></span>
+	  	  	  	  	<button class="btn btn-default ace-btn" data-id="1">1</button> OR 
+	  	  	  	  	<button class="btn btn-default ace-btn" data-id="11">11</button>
+	  	  	  	</div>
+	  	  	</div>
+	  	</div>
+	</div>
+</template>
+
+<template name="hand">
+	<div class="row">
+		<div id="hand" class="col-xs-12 col-md-12">
+			<h2>Hand</h2>
+			{{#each player.hand}}
+				<div data-suit="{{suit}}" data-name="{{name}}" data-card-value="{{cardValue}}" data-game-value="{{gameValue}}" class="card">
+					<img src="/cards/{{id}}.png" alt="{{id}}">
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</template>
+
+<template name="pile">
+	<div class="row">
+		<div id="pile" class="well">
+			<h2>Collected Cards</h2>
+			<ol>
+				{{#each player.pile}}
+					<li> ==> {{name}} of {{suit}}</li>
+				{{/each}}
+			</ol>		
+		</div>
+	</div>
+</template>
+
+<template name="playedCards">
+	<div class="col-xs-6 col-md-6 well">
+		<h2>Cards that users played</h2>
+		<ul>
+			{{#each getPlayedCards}}
+				<li>{{name}} of {{suit}}</li>
+			{{/each}}
+		</ul>
+	</div>
+</template>
+
+<template name="score">
+	<div class="row">
+		<h1>Game Over! {{message}}</h1>
+		<table class="table table-bordered">
+			<thead class="bg-primary">
+				<tr>
+					<th>Category</th>
+					<th>You</th>
+					<th><i class="glyphicon glyphicon-user"></i> {{otherPlayer.username}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="bg-warning">
+					<td>Most Cards</td>
+					<td>{{player.score.mostCards}}</td>
+					<td>{{otherPlayer.score.mostCards}}</td>
+				</tr>
+				<tr class="bg-info">
+					<td>Most Points</td>
+					<td>{{player.score.points}}</td>
+					<td>{{otherPlayer.score.points}}</td>
+				</tr>
+				<tr class="bg-warning">
+					<td>Recke - Table Clearings</td>
+					<td>{{player.score.recke}}</td>
+					<td>{{otherPlayer.score.recke}}</td>
+				</tr>
+				<tr class="bg-info">
+					<td><b>Total</b></td>
+					<td><b>{{player.score.total}}</b></td>
+					<td><b>{{otherPlayer.score.total}}</b></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</template>
