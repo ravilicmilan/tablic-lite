@@ -9,7 +9,7 @@
 				<div style="visibility:hidden;">{{table_changed}}</div>
 				{{> table}}
 			</div>
-			
+			<hr>
 			{{> hand}}
 		{{/if}}
 		{{> pile}}
@@ -18,7 +18,7 @@
 
 <template name="status">
 	<div class="row">
-		<div class="col-xs-12 col-md-12">
+		<div id="status" class="col-xs-12 col-md-12">
 			<h2>
 				Game between you and 
 				<span class="label label-primary">
@@ -58,7 +58,7 @@
 	  	  	  	  	<h4 class="modal-title" id="myModalLabel">Choose Value For Ace</h4>
 	  	  	  	</div>
 	  	  	  	<div class="modal-body">
-	  	  	  		<span style="display: none;" id="ace-dialog"></span>
+	  	  	  		<span id="ace-dialog"></span>
 	  	  	  	  	<button class="btn btn-default ace-btn" data-id="1">1</button> OR 
 	  	  	  	  	<button class="btn btn-default ace-btn" data-id="11">11</button>
 	  	  	  	</div>
@@ -107,6 +107,7 @@
 <template name="score">
 	<div class="row">
 		<h1>Game Over! {{message}}</h1>
+		<br>
 		<table class="table table-bordered">
 			<thead class="bg-primary">
 				<tr>
@@ -127,7 +128,7 @@
 					<td>{{otherPlayer.score.points}}</td>
 				</tr>
 				<tr class="bg-warning">
-					<td>Recke - Table Clearings</td>
+					<td>Recke</td>
 					<td>{{player.score.recke}}</td>
 					<td>{{otherPlayer.score.recke}}</td>
 				</tr>
